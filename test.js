@@ -10,3 +10,6 @@ console.log(myHashMap.get("foo")); // "another value"
 console.log(myHashMap.get("test")); // null
 console.log(myHashMap.has("bar")); // true
 console.log(myHashMap.has("test")); // false
+console.log(myHashMap.remove("bar")); // true
+console.log(myHashMap.get("bar")); // null
+console.log(myHashMap.length); // 1

@@ -56,13 +56,19 @@ export default class HashMap {
     return hashCode;
   }
 
-  set(key, value) {
-    const index = this.hash(key) % this.buckets.length;
+  index(string) {
+    const index = this.hash(string) % this.buckets.length;
 
     // Unallow out of bound index
     if (index < 0 || index >= this.buckets.length) {
       throw new Error("Trying to access index out of bound");
     }
+
+    return index;
+  }
+
+  set(key, value) {
+    const index = this.index(key);
 
     const bucket = this.buckets[index];
 
@@ -84,12 +90,7 @@ export default class HashMap {
   }
 
   get(key) {
-    const index = this.hash(key) % this.buckets.length;
-
-    // Unallow out of bound index
-    if (index < 0 || index >= this.buckets.length) {
-      throw new Error("Trying to access index out of bound");
-    }
+    const index = this.index(key);
 
     const bucket = this.buckets[index];
 
@@ -107,12 +108,7 @@ export default class HashMap {
   }
 
   has(key) {
-    const index = this.hash(key) % this.buckets.length;
-
-    // Unallow out of bound index
-    if (index < 0 || index >= this.buckets.length) {
-      throw new Error("Trying to access index out of bound");
-    }
+    const index = this.index(key);
 
     const bucket = this.buckets[index];
 
@@ -121,5 +117,31 @@ export default class HashMap {
     }
 
     return bucket.contains(key);
+  }
+
+  remove(key) {
+    const index = this.index(key);
+
+    const bucket = this.buckets[index];
+
+    if (!bucket) {
+      return false;
+    }
+
+    if (bucket.contains(key)) {
+      const nodeIndex = bucket.find(key);
+      bucket.removeAt(nodeIndex);
+      this.capacity--;
+      return true;
+    }
+    return false;
+  }
+
+  get length() {
+    let count = 0;
+    this.buckets.forEach((bucket) => {
+      if (bucket) count += bucket.size;
+    });
+    return count;
   }
 }
