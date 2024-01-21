@@ -57,14 +57,14 @@ export default class HashMap {
   }
 
   set(key, value) {
-    let index = this.hash(key) % this.buckets.length;
+    const index = this.hash(key) % this.buckets.length;
 
     // Unallow out of bound index
     if (index < 0 || index >= this.buckets.length) {
       throw new Error("Trying to access index out of bound");
     }
 
-    let bucket = this.buckets[index];
+    const bucket = this.buckets[index];
 
     if (!bucket) {
       this.buckets[index] = new Bucket();
@@ -84,14 +84,14 @@ export default class HashMap {
   }
 
   get(key) {
-    let index = this.hash(key) % this.buckets.length;
+    const index = this.hash(key) % this.buckets.length;
 
     // Unallow out of bound index
     if (index < 0 || index >= this.buckets.length) {
       throw new Error("Trying to access index out of bound");
     }
 
-    let bucket = this.buckets[index];
+    const bucket = this.buckets[index];
 
     if (!bucket) {
       return null;
@@ -104,5 +104,22 @@ export default class HashMap {
     }
 
     return null;
+  }
+
+  has(key) {
+    const index = this.hash(key) % this.buckets.length;
+
+    // Unallow out of bound index
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bound");
+    }
+
+    const bucket = this.buckets[index];
+
+    if (!bucket) {
+      return false;
+    }
+
+    return bucket.contains(key);
   }
 }
