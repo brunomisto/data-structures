@@ -23,3 +23,13 @@ console.log(myHashMap.entries); // [["foo, "another value"], ["a", "foo"]...] (y
 console.log(myHashMap.length); // 4
 myHashMap.clear();
 console.log(myHashMap.length); // 0
+
+import HashSet from "./HashSet.js";
+
+const myHashSet = new HashSet();
+myHashSet.set("foo");
+myHashSet.set("bar");
+myHashSet.set("baz");
+console.log(myHashSet.keys);
+myHashSet.remove("bar");
+console.log(myHashSet.length);
