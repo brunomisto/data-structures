@@ -87,6 +87,17 @@ export default class HashMap {
       bucket.append(new Node(key, value));
       this.capacity++;
     }
+
+    // Check if capacity is at load factor level or greater
+    if (this.capacity / this.buckets.length >= this.loadFactor) {
+      // create array with double current size
+      // Copy current buckets to it
+      let newBuckets = new Array(this.buckets.length * 2).fill(null);
+      for (let i = 0; i < this.buckets.length; i++) {
+        newBuckets[i] = this.buckets[i];
+      }
+      this.buckets = newBuckets;
+    }
   }
 
   get(key) {
