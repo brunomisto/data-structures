@@ -144,4 +144,68 @@ export default class HashMap {
     });
     return count;
   }
+
+  clear() {
+    this.buckets.forEach((bucket) => {
+      if (!bucket) return;
+      for (let i = 0; i < bucket.size; i++) {
+        bucket.pop();
+      }
+    });
+    this.buckets.fill(null);
+  }
+
+  get keys() {
+    const keysArray = [];
+
+    this.buckets.forEach((bucket) => {
+      if (!bucket) return;
+
+      // Push keys from bucket to array until pointer reaches null
+      let pointer = bucket.head;
+
+      while (pointer) {
+        keysArray.push(pointer.key);
+        pointer = pointer.next;
+      }
+    });
+
+    return keysArray;
+  }
+
+  get values() {
+    const valuesArray = [];
+
+    this.buckets.forEach((bucket) => {
+      if (!bucket) return;
+
+      // Push values from bucket to array until pointer reaches null
+      let pointer = bucket.head;
+
+      while (pointer) {
+        valuesArray.push(pointer.value);
+        pointer = pointer.next;
+      }
+    });
+
+    return valuesArray;
+  }
+
+  get entries() {
+    const valuesArray = [];
+
+    this.buckets.forEach((bucket) => {
+      if (!bucket) return;
+
+      // Push key value pairs from bucket to array until pointer reaches null
+      let pointer = bucket.head;
+
+      while (pointer) {
+        valuesArray.push([pointer.key, pointer.value]);
+        pointer = pointer.next;
+      }
+    });
+
+    return valuesArray;
+  }
 }
