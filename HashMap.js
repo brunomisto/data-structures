@@ -72,7 +72,7 @@ export default class HashMap {
       this.capacity++;
     } else if (bucket.contains(key)) {
       // Find node index
-      let nodeIndex = bucket.find(key);
+      const nodeIndex = bucket.find(key);
 
       // Change its value
       bucket.at(nodeIndex).value = value;
@@ -81,5 +81,28 @@ export default class HashMap {
       bucket.append(new Node(key, value));
       this.capacity++;
     }
+  }
+
+  get(key) {
+    let index = this.hash(key) % this.buckets.length;
+
+    // Unallow out of bound index
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bound");
+    }
+
+    let bucket = this.buckets[index];
+
+    if (!bucket) {
+      return null;
+    }
+
+    if (bucket.contains(key)) {
+      const nodeIndex = bucket.find(key);
+      const node = bucket.at(nodeIndex);
+      return node.value;
+    }
+
+    return null;
   }
 }
