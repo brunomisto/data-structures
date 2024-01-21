@@ -1,2 +1,2 @@
-# JavaScript linked list
-This is my implementation of linked lists using js, not necessary but good for learning
+# JavaScript data structures
+This is my implementation of some data structures using js
