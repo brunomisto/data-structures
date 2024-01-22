@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable import/extensions */
 import Tree from "./BST.js";
 
 // function from odin project
