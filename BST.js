@@ -125,8 +125,8 @@ export default class Tree {
   }
 
   levelOrder(callback) {
+    if (!this.root) return;
     const list = [];
-    if (!this.root) return list;
 
     const queue = [];
     queue.push(this.root);
@@ -141,6 +141,67 @@ export default class Tree {
       }
       if (currentNode.left) queue.push(currentNode.left);
       if (currentNode.right) queue.push(currentNode.right);
+    }
+
+    if (!callback) {
+      // eslint-disable-next-line consistent-return
+      return list;
+    }
+  }
+
+  preOrder(callback = null, node = this.root) {
+    if (!node) {
+      return [];
+    }
+
+    let list = [];
+
+    if (callback) {
+      list.push(callback(node));
+    } else {
+      list.push(node.data);
+    }
+
+    list = list.concat(this.preOrder(callback, node.left));
+    list = list.concat(this.preOrder(callback, node.right));
+
+    return list;
+  }
+
+  inOrder(callback = null, node = this.root) {
+    if (!node) {
+      return [];
+    }
+
+    let list = [];
+
+    list = list.concat(this.preOrder(callback, node.left));
+
+    if (callback) {
+      list.push(callback(node));
+    } else {
+      list.push(node.data);
+    }
+
+    list = list.concat(this.preOrder(callback, node.right));
+
+    return list;
+  }
+
+  postOrder(callback = null, node = this.root) {
+    if (!node) {
+      return [];
+    }
+
+    let list = [];
+
+    list = list.concat(this.preOrder(callback, node.left));
+    list = list.concat(this.preOrder(callback, node.right));
+
+    if (callback) {
+      list.push(callback(node));
+    } else {
+      list.push(node.data);
     }
 
     return list;

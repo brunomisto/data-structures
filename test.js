@@ -53,13 +53,16 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const myTree = new Tree([1, 9, 4, 5, 3, 2, 1, 0, 4, 2, 2, 2]);
-prettyPrint(myTree.root);
-console.log(myTree.levelOrder().map((foo) => foo.data));
-myTree.delete(3);
-myTree.delete(4);
-myTree.delete(5);
+// console.log(myTree.levelOrder().map((foo) => foo.data));
+// myTree.delete(3);
+// myTree.delete(4);
+// myTree.delete(5);
 prettyPrint(myTree.root);
 // console.log(myTree.find(9));
-myTree.levelOrder((node) => {
-  console.log(node.data);
-});
+// myTree.levelOrder((node) => {
+//   console.log(node.data);
+// });
+
+console.log(myTree.preOrder());
+console.log(myTree.inOrder());
+console.log(myTree.postOrder());
