@@ -15,7 +15,7 @@ export default class Tree {
     );
   }
 
-  static buildTree(array, start, end) {
+  static buildTree(array, start = 0, end = array.length - 1) {
     if (start > end) return null;
 
     const mid = Math.floor((start + end) / 2);
@@ -57,7 +57,7 @@ export default class Tree {
   }
 
   delete(value) {
-    const setNewRoot = (deleteValue, node = this.root) => {
+    const innerDelete = (deleteValue, node = this.root) => {
       const root = node;
       // base case
       if (root === null) {
@@ -85,7 +85,7 @@ export default class Tree {
           root.data = minimumValue;
 
           // delete it from right subtree
-          root.right = setNewRoot(root.data, root.right);
+          root.right = innerDelete(root.data, root.right);
 
           return root;
         }
@@ -95,15 +95,15 @@ export default class Tree {
       }
 
       if (deleteValue < root.data) {
-        root.left = setNewRoot(deleteValue, root.left);
+        root.left = innerDelete(deleteValue, root.left);
       } else {
-        root.right = setNewRoot(deleteValue, root.right);
+        root.right = innerDelete(deleteValue, root.right);
       }
 
       return root;
     };
 
-    this.root = setNewRoot(value);
+    this.root = innerDelete(value);
   }
 
   find(value) {
@@ -205,5 +205,62 @@ export default class Tree {
     }
 
     return list;
+  }
+
+  height(node, count = 0) {
+    // number of edges in the longest path from a given node to a leaf node
+    // height of a leaf node should be 0
+    if (!node) {
+      return count;
+    }
+
+    if (!node.left && !node.right) {
+      // base case: check if node is leaf
+      return count;
+    }
+
+    return Math.max(
+      this.height(node.left, count + 1),
+      this.height(node.right, count + 1),
+    );
+  }
+
+  depth(node) {
+    // number of edges in the path from a given node to the tree’s root node
+    let pointer = this.root;
+    let count = 0;
+
+    while (pointer) {
+      // check if find node
+      if (pointer === node) {
+        return count;
+      }
+
+      if (node.data > pointer.data) {
+        pointer = pointer.right;
+      }
+
+      if (node.data < pointer.data) {
+        pointer = pointer.left;
+      }
+
+      count += 1;
+    }
+
+    return null;
+  }
+
+  get isBalanced() {
+    const leftHeight = this.height(this.root.left);
+    const rightHeight = this.height(this.root.right);
+    if (leftHeight > rightHeight) {
+      return leftHeight - rightHeight <= 1;
+    }
+    return rightHeight - leftHeight <= 1;
+  }
+
+  rebalance() {
+    const array = this.preOrder();
+    this.root = Tree.buildTree(array.sort());
   }
 }

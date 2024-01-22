@@ -57,12 +57,22 @@ const myTree = new Tree([1, 9, 4, 5, 3, 2, 1, 0, 4, 2, 2, 2]);
 // myTree.delete(3);
 // myTree.delete(4);
 // myTree.delete(5);
-prettyPrint(myTree.root);
+
 // console.log(myTree.find(9));
 // myTree.levelOrder((node) => {
 //   console.log(node.data);
 // });
 
-console.log(myTree.preOrder());
-console.log(myTree.inOrder());
-console.log(myTree.postOrder());
+// console.log(myTree.preOrder());
+// console.log(myTree.inOrder());
+// console.log(myTree.postOrder());
+
+[10, 20, 30, 40, 50].forEach((num) => myTree.insert(num));
+prettyPrint(myTree.root);
+// console.log(myTree.height(myTree.root.left));
+// console.log(myTree.height(myTree.root.right));
+console.log(myTree.isBalanced);
+
+myTree.rebalance();
+prettyPrint(myTree.root);
+console.log(myTree.isBalanced);
