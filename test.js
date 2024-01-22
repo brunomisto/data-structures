@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // import HashMap from "./HashMap.js";
 
 // const myHashMap = new HashMap();
@@ -34,6 +35,7 @@
 // myHashSet.remove("bar");
 // console.log(myHashSet.length);
 
+// eslint-disable-next-line import/extensions
 import Tree from "./BST.js";
 
 // function from odin project
@@ -52,3 +54,12 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 const myTree = new Tree([1, 9, 4, 5, 3, 2, 1, 0, 4, 2, 2, 2]);
 prettyPrint(myTree.root);
+console.log(myTree.levelOrder().map((foo) => foo.data));
+myTree.delete(3);
+myTree.delete(4);
+myTree.delete(5);
+prettyPrint(myTree.root);
+// console.log(myTree.find(9));
+myTree.levelOrder((node) => {
+  console.log(node.data);
+});
